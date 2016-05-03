@@ -1,13 +1,19 @@
 language: python
 virtualenv: 
   system_site_packages: true
-sudo: false
+sudo: required
 addons:
   apt:
     packages:
     - yum
     - python-rpm
+services: 
+    - docker
+before_script:
+  - sudo apt-get install -y mock
 script: 
+  - docker run centos:7 /bin/sh -c "uname -a"
+  - docker run --privileged centos:7 /bin/sh -c "uname -a"
   - pep8 --show-source --show-pep8 setup.py planex tests
   - pylint setup.py planex
   - nosetests --verbose
