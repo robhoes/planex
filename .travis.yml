@@ -10,10 +10,9 @@ addons:
 services: 
     - docker
 before_script:
-  - docker build -t planex-build --force-rm=true -f Dockerfile .
+  - docker build -t planex-build --force-rm=true -f docker/Dockerfile.release docker/
 script: 
-  - docker run planex-build /bin/sh -c "uname -a"
-  - docker run --privileged centos:7 /bin/sh -c "uname -a"
   - pep8 --show-source --show-pep8 setup.py planex tests
   - pylint setup.py planex
   - nosetests --verbose
+  - docker/wrap.sh make
