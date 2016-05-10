@@ -11,5 +11,6 @@ docker run \
   --rm -i -t \
   --volumes-from planex-persist \
   -v ${PWD}:/build \
+  -v /local/scratch/euanh/work/planex:/local/scratch/euanh/work/planex \
   -e EXTUID=$(id -u) -e EXTGID=$(id -g) \
   planex-release:0.7.3 "$*"
