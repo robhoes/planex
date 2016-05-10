@@ -1,0 +1,13 @@
+FROM centos:7
+MAINTAINER Euan Harris <euan.harris@citrix.com>
+RUN yum -y install epel-release
+
+WORKDIR /build # assume that this is a volume containing a planex checkout
+RUN yum-builddep -y planex.spec
+RUN awk '/^Requires:/ { print $2 }' planex.spec | xargs yum -y install
+RUN python setup.py build
+RUN python setup.py install
+
+RUN useradd build --groups mock,wheel --home-dir /build
+COPY entry.sh /entry.sh
+ENTRYPOINT ["/entry.sh"]
