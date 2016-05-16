@@ -11,6 +11,8 @@ docker run \
   --rm -i -t \
   --volumes-from planex-persist \
   -v ${PWD}:/build \
+  # Fill these in automatically from the pins file
+  # Chicken and egg - need to fill it in when pinning as well
   -v /local/scratch/euanh/work/planex:/local/scratch/euanh/work/planex \
   -e EXTUID=$(id -u) -e EXTGID=$(id -g) \
   planex-release:0.7.3 "$*"

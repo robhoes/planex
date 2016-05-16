@@ -1,6 +1,6 @@
 #!/bin/sh -xe
 
 echo $@
-usermod -u $EXTUID build
-groupmod -g $EXTGID build
+[ -v $EXTUID ] || usermod -u $EXTUID build
+[ -v $EXTGID ] || groupmod -g $EXTGID build
 su - build -c "$*"
